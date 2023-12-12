@@ -81,6 +81,25 @@ headers: {
                             document.querySelector('#text3').value = '';
                             document.querySelector('#text4').value = '';
                             document.querySelector('#text5').value = '';
+
+                            let card = document.createElement('div');
+                            card.classList.add('card');
+                            card.innerHTML = `
+                            <img src="${data.imageUrl}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${data.name}</h5>
+                                <p class="card-text">${data.description}</p>
+                                <p class="card-text">${data.brand}</p>
+                                <p class="card-text">${data.price}$</p>
+                            </div>
+                        `;
+                        
+                        // Aggiungi la card al contenitore delle card esistente
+                        let cardsContainer = document.querySelector('#cardsContainer');
+                        cardsContainer.appendChild(card);
+
+                        form.style.display = 'none';
+                            
                         })
                         .catch((error) => {
                             console.error('Errore durante la richiesta:', error);
