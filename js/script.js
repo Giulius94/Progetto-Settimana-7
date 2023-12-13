@@ -14,14 +14,14 @@ headers: {
 
   /* NON REFRESHARE LA PAGINA INDEX PER FAVORE ABBI PIETà DI NOI*/
   
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname.includes('back-office.html')) {
-        addProduct();
-        fetchProducts();
-    } else if (window.location.pathname.includes('index.html')) {
-        fetchDataAndAppend();
-    }
-});
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.location.pathname.includes('back-office.html')) {
+            addProduct();
+            fetchProducts();
+        } else if (window.location.pathname.includes('index.html')) {
+            fetchDataAndAppend();
+        }
+    });
 
 function fetchDataAndAppend() {
     fetch('https://striveschool-api.herokuapp.com/api/product/', {
@@ -53,7 +53,7 @@ function addProduct() {
     if (button) {
         button.addEventListener('click', () => {
             let form = document.createElement('form');
-                
+            form.setAttribute('id', 'editForm');
             form.innerHTML = `
                 <div class="mt-2">
                     <label for="text1" class="form-label">Add name</label>
@@ -172,9 +172,10 @@ function createProductCard(product) {
             <p class="card-text">Description: ${product.description}</p>
             <p class="card-text">Price: $${product.price}</p>
             <p class="card-text">Brand: ${product.brand}</p>
-            <div class="d-flex justify-content-around">
+            <div class="d-flex flex-column">
                 <button class="btn btn-danger delete-btn">Delete</button>
-                <button class="btn btn-success send-btn">Send</button>
+                <button class="btn btn-success send-btn my-2">Send</button>
+                <button class="btn btn-primary edit-btn">Edit</button>
             <div>
         </div>`;
 
@@ -208,7 +209,6 @@ function createCardIndex(product) {
             <p class="card-text">Price: $${product.price}</p>
             <p class="card-text">Brand: ${product.brand}</p>
             <div class="d-flex justify-content-around"">
-                <button class="btn btn-primary delete-btn">Edit</button>
                 <button class="btn btn-success send-btn">Description</button>
             </div>
         </div>`;
