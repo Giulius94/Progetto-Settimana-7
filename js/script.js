@@ -136,24 +136,87 @@ function createProductCard(product) {
     card.innerHTML = `
         <img src="${product.imageUrl}" class="card-img-top" alt="${product.name}">
         <div class="card-body">
-            <h5 class="card-title">Marca:${product.name}</h5>
-            <p class="card-text">Description:${product.description}</p>
+            <h5 class="card-title">Marca: ${product.name}</h5>
+            <p class="card-text">Description: ${product.description}</p>
             <p class="card-text">Price: $${product.price}</p>
             <p class="card-text">Brand: ${product.brand}</p>
             <button class="btn btn-danger delete-btn">Delete</button>
-            <button class="btn btn-success delete-btn">Send to Homepage</button>
-            </div>
-        `;
-    
-        // Aggiungi un gestore di eventi per il click del pulsante di eliminazione
-        let deleteButton = card.querySelector('.delete-btn');
-        deleteButton.addEventListener('click', () => {
-            // Chiama la funzione per eliminare l'elemento
-            deleteProduct(product._id);
-        });
-    
+            <button class="btn btn-success send-btn">Send to Homepage</button>
+        </div>`;
+
+        
+
+    // Aggiungi un gestore di eventi per il click del pulsante di eliminazione
+    let deleteButton = card.querySelector('.delete-btn');
+    deleteButton.addEventListener('click', () => {
+        // Chiama la funzione per eliminare l'elemento
+        deleteProduct(product._id);
+    });
+
+    // Aggiungi un gestore di eventi per il click del pulsante di invio
+    let sendButton = card.querySelector('.send-btn');
+    sendButton.addEventListener('click', () => {
+        // Chiama la funzione per inviare la card
+        sendProductToHomepage(product);
+    });
+
+    return card;
+}
+
+function createCardIndex(product) {
+    let card = document.createElement('div');
+    card.classList.add('card');
+    card.innerHTML = `
+        <img src="${product.imageUrl}" class="card-img-top" alt="${product.name}">
+        <div class="card-body">
+            <h5 class="card-title">Marca: ${product.name}</h5>
+            <p class="card-text">Description: ${product.description}</p>
+            <p class="card-text">Price: $${product.price}</p>
+            <p class="card-text">Brand: ${product.brand}</p>
+            <button class="btn btn-primary delete-btn">Edit</button>
+            <button class="btn btn-success send-btn">Description</button>
+        </div>`;
+        
         return card;
+}
+
+function sendProductToHomepage(product) {
+    // Costruisci l'URL con i parametri della card, incluso l'URL dell'immagine
+    const url = `index.html?name=${encodeURIComponent(product.name)}&description=${encodeURIComponent(product.description)}&price=${encodeURIComponent(product.price)}&brand=${encodeURIComponent(product.brand)}&imageUrl=${encodeURIComponent(product.imageUrl)}`;
+
+    // Naviga alla pagina index con l'URL costruito
+    window.location.href = url;
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Recupera i parametri dell'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name');
+    const description = urlParams.get('description');
+    const price = urlParams.get('price');
+    const brand = urlParams.get('brand');
+    const imageUrl = urlParams.get('imageUrl');
+
+    if (name && description && price && brand && imageUrl) {
+        // Utilizza i dati come desiderato
+        console.log('Name:', name);
+        console.log('Description:', description);
+        console.log('Price:', price);
+        console.log('Brand:', brand);
+        console.log('Image URL:', imageUrl);
+
+        // Puoi ora appendere i dati nella pagina come preferisci
+        // Ad esempio, puoi creare una nuova card e aggiungerla a un elemento sulla pagina
+        const cardContainer = document.querySelector('#sentCardContainer');
+        const newCard = createCardIndex({ name, description, price, brand, imageUrl });
+        cardContainer.appendChild(newCard);
     }
+});
+
+
+
+
 
     function deleteProduct(productId) {
         fetch(`https://striveschool-api.herokuapp.com/api/product/${productId}`, {
