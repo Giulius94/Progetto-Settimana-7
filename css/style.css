@@ -1,0 +1,24 @@
+.card {
+    max-width: 15em;
+    padding: 1em;
+    margin: 1em;
+    box-shadow: -1px -1px 5px 1px lightgrey;
+}
+
+
+.card img {
+    min-height: 15em;
+}
+
+header a img {
+    width: 7em;
+    border-radius: 1em;
+}
+
+#shopPhoto {
+    max-width: 20em;
+}
+
+#crudazon {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}

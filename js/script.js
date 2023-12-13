@@ -11,10 +11,42 @@ headers: {
   })
   .catch((error) => console.log("Error!! " + error)); */
 
+
+  /* NON REFRESHARE LA PAGINA INDEX PER FAVORE ABBI PIETà DI NOI*/
+  
   document.addEventListener('DOMContentLoaded', () => {
-    addProduct();
-    fetchProducts();
+    if (window.location.pathname.includes('back-office.html')) {
+        addProduct();
+        fetchProducts();
+    } else if (window.location.pathname.includes('index.html')) {
+        fetchDataAndAppend();
+    }
 });
+
+function fetchDataAndAppend() {
+    fetch('https://striveschool-api.herokuapp.com/api/product/', {
+        headers: {
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTc4NDAxNmMwNTgzNTAwMTg1MjMxODkiLCJpYXQiOjE3MDIzNzk1NDIsImV4cCI6MTcwMzU4OTE0Mn0.d8QkvVHhCkTOnICqhbRveiPBpo-KXpuPo1gn473RwKc"
+        },
+    })
+    .then(response => response.json())
+    .then(products => {
+        appendDataToIndex(products);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}
+
+function appendDataToIndex(products) {
+    let cardContainer = document.querySelector('#sentCardContainer');
+    cardContainer.innerHTML = '';
+
+    products.forEach(product => {
+        let card = createCardIndex(product);
+        cardContainer.appendChild(card);
+    });
+}
 
 function addProduct() {
     let button = document.querySelector('#btn');
@@ -140,8 +172,10 @@ function createProductCard(product) {
             <p class="card-text">Description: ${product.description}</p>
             <p class="card-text">Price: $${product.price}</p>
             <p class="card-text">Brand: ${product.brand}</p>
-            <button class="btn btn-danger delete-btn">Delete</button>
-            <button class="btn btn-success send-btn">Send to Homepage</button>
+            <div class="d-flex justify-content-around">
+                <button class="btn btn-danger delete-btn">Delete</button>
+                <button class="btn btn-success send-btn">Send</button>
+            <div>
         </div>`;
 
         
@@ -173,8 +207,10 @@ function createCardIndex(product) {
             <p class="card-text">Description: ${product.description}</p>
             <p class="card-text">Price: $${product.price}</p>
             <p class="card-text">Brand: ${product.brand}</p>
-            <button class="btn btn-primary delete-btn">Edit</button>
-            <button class="btn btn-success send-btn">Description</button>
+            <div class="d-flex justify-content-around"">
+                <button class="btn btn-primary delete-btn">Edit</button>
+                <button class="btn btn-success send-btn">Description</button>
+            </div>
         </div>`;
         
         return card;
@@ -189,7 +225,7 @@ function sendProductToHomepage(product) {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
+/* document.addEventListener('DOMContentLoaded', () => {
     // Recupera i parametri dell'URL
     const urlParams = new URLSearchParams(window.location.search);
     const name = urlParams.get('name');
@@ -212,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newCard = createCardIndex({ name, description, price, brand, imageUrl });
         cardContainer.appendChild(newCard);
     }
-});
+}); */
 
 
 
