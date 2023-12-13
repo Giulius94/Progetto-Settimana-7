@@ -77,6 +77,7 @@ function addProduct() {
                 .then(data => {
                     console.log('Risposta dal server:', data);
                     clearForm();
+                    form.remove();
                     fetchProducts();
                 })
                 .catch((error) => {
@@ -140,6 +141,7 @@ function createProductCard(product) {
             <p class="card-text">Price: $${product.price}</p>
             <p class="card-text">Brand: ${product.brand}</p>
             <button class="btn btn-danger delete-btn">Delete</button>
+            <button class="btn btn-success delete-btn">Send to Homepage</button>
             </div>
         `;
     
