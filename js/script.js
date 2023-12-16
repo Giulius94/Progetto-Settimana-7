@@ -21,6 +21,7 @@ headers: {
         } else if (window.location.pathname.includes('index.html')) {
             fetchDataAndAppend();
         }
+        detailsCard()
     });
 
 function fetchDataAndAppend() {
@@ -56,23 +57,23 @@ function addProduct() {
             form.setAttribute('id', 'editForm');
             form.innerHTML = `
                 <div class="mt-2">
-                    <label for="text1" class="form-label">Add name</label>
+                    <label for="text1" class="form-label">Name</label>
                     <input type="text" class="form-control" id="text1">
                 </div>
                 <div class="">
-                    <label for="text2" class="form-label">Add description</label>
+                    <label for="text2" class="form-label">Description</label>
                     <input type="text" class="form-control" id="text2">
                 </div>
                 <div class="">
-                    <label for="text3" class="form-label">Add Brand</label>
+                    <label for="text3" class="form-label">Brand</label>
                     <input type="text" class="form-control" id="text3">
                 </div>
                 <div class="">
-                    <label for="text4" class="form-label">Add image</label>
+                    <label for="text4" class="form-label">Image</label>
                     <input type="text" class="form-control" id="text4">
                 </div>
                 <div class="">
-                    <label for="text5" class="form-label">Add price</label>
+                    <label for="text5" class="form-label">Price</label>
                     <input type="text" class="form-control" id="text5">
                 </div>
                 <button type="submit" id='submit' class="btn btn-primary mt-3">Submit</button>`;
@@ -172,6 +173,7 @@ function createProductCard(product) {
             <p class="card-text">Description: ${product.description}</p>
             <p class="card-text">Price: $${product.price}</p>
             <p class="card-text">Brand: ${product.brand}</p>
+            <span class="d-none">${product._id}</span>
             <div class="d-flex flex-column">
                 <button class="btn btn-danger delete-btn">Delete</button>
                 <button class="btn btn-success send-btn my-2">Send</button>
@@ -199,6 +201,7 @@ function createProductCard(product) {
 }
 
 function createCardIndex(product) {
+    console.log(product);
     let card = document.createElement('div');
     card.classList.add('card');
     card.innerHTML = `
@@ -208,6 +211,7 @@ function createCardIndex(product) {
             <p class="card-text">Description: ${product.description}</p>
             <p class="card-text">Price: $${product.price}</p>
             <p class="card-text">Brand: ${product.brand}</p>
+            <span class="d-none">${product._id}</span>
             <div class="d-flex justify-content-around"">
                 <button class="btn btn-success send-btn">Description</button>
             </div>
@@ -285,3 +289,16 @@ function clearForm() {
     document.querySelector('#text4').value = '';
     document.querySelector('#text5').value = '';
 }
+
+function detailsCard() {
+    let detailsButton = document.querySelector("#sentCardContainer")
+    detailsButton.addEventListener('click',(e)=>{
+       if (e.target.classList.value === 'btn btn-success send-btn') {
+        let idCards = e.target.parentNode.parentNode.childNodes[9].innerText;
+         let Url = 'dettaglio.html?id=' + idCards;
+         console.log(Url);
+         window.open(Url);
+       }
+    })
+}
+
