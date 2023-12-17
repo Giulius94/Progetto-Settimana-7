@@ -22,3 +22,7 @@ header a img {
 #crudazon {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
+
+#details-card {
+    min-width: 100%;
+}

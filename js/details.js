@@ -20,7 +20,8 @@ function createCard(x) {
     console.log(products)
     let cardPadre = document.querySelector('.container');
         let card = document.createElement('div');
-        card.className = 'card mb-3" style="max-width: 540px;'
+        card.className = "card mb-3";
+        card.setAttribute('id', 'details-card')
         card.innerHTML = `
         <div class="row g-0">
         <div class="col-md-4">
@@ -28,10 +29,12 @@ function createCard(x) {
         </div>
         <div class="col-md-8">
             <div class="card-body">
-            <h5 class="card-title">${products.name}</h5>
-            <p class="card-text">${products.brand}</p>
-            <p class="card-text">${products.description}</p>
-            <p class="card-text"><small class="text-body-secondary">$${products.price}</p>
+            <h5 class="card-title"> <span>Modello:</span> ${products.name}</h5>
+            <p class="card-text mt-4"> <span>Brand:</span>${products.brand}</p>
+            <p class="card-text mt-4"> <span>Categoria:</span>${products.description}</p>
+            <p class="card-text mt-4 text-body-secondary"> <span>Prezzo:</span> $${products.price}</p>
+            <h5 class="mt-5"> Spedizioni 24/48H isole incluse </h5>
+            <h6 class="mt-5"> Tutti i nostri prodotti vengono sottoposti ad un controllo qualitativo al fine di garantire la soddisfazione del cliente</h6>
             </div>
         </div> 
         </div>
